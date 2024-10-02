@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=p5ltsbr_r6e74U2tlG4pTYg_Aw5TZQOdYhAycEqlVUhDiFhC3ECI7apRGzfGm4c398-GpoBxkuWst48RRjgSZj6OWUNYAVhKYmEis_iH2i_Zfbsr-eA_RJHZnyFsEk2JPDvNPNI68o7KRBGG3p-LeW5uO8S1qpTtL4AllHescw9VPJ8nPDYAmmCzlsQYkhBOadmxObPPA5CwIkf_eEc5vKO9cMDtc9p2t04fR0VLjUeINUOt2357FUDdZqec_0vtuRxJyGhigSne5o3J-we9sdEJLu8kCFVAMhzZYGLvTijyN60qWYRIcCDriUxrScw-Efkm9pGSG_TvJHlL2kdUA3eP9svcqjGm7_PoyJcLHwz2A8ipTDR2l-eBHr6ytU1c3cYdcueCVDJjw-bRUFOUDXfDvO0y7eQ14C4-FVVYMyfN56yNmxYBXAxOWtH5OwKn50jaPdMCBrq5jkdeVkrs0k5ABosxoGkc_q4kDLvHyI2ZypLE_IjIdvPVCG-iwNJVRVWH1kNv1ToyQwrtN8hwS-zxhNMOln0Cf8YUMvZV5if7OLzAnk_mrx1SyHrJc6nGZ9V8Sp3bAXP_oELSV67RbsPXdIebhyVebRAdrO0xwIlbRen7mILRGWCHkht8pp_Mw3xobC8GXqCI3sWddnKml48cXoMbuj8s7xX8oMfBA-wXJEywq9ikvvW1ahYgJfT-lVAuxweVmYx3bsFO35HfvQo8_M8ecmMnM7qrhqfm3pb3P_vT1jRJ_FYW9SvV4nDZwDjtoRA82RzrDc6fWk5dTHBsxf_xOKmXO9OE4ftSAqknLt1ddQDR3Y6dqjQYsjG0P5GyOr8VU27w_waW00g3yx5kyWqioQcJ2G8Vx7leGL1F7EJ6pjzNeuIwIi1JLZaEC-B2_sID1pfrbBeo3B8NDv2l6o5rGKns-CHSR5hW3hsx-Zg5CvJG7x_kaQczcfke5Zr48a9MTubDmMOhSE7altiBbMytMix4Zgte8Mxn2WiQBGheIhJ3NgswoIzOKy_DrWYXHxc-kqQYZEBUhgSaHNbRtpL0ymf5r_lvyAvrIMgrY1EMFmjbKZLuVDrXbD8OjI1XfYDfkOgN-ObbpaoA4ofT_eCFYI8nLTUdz1ZoxeEmuCBSyia6kIriB0CSO89fQqwr9VBHOqS3OYH6gEDcn71sLzBYfHMFg92_0SotVU5cfhbnrHsZuJSBZvGyvsAIxGlBXeQ2J-ATRCgCfcZ1qo7wOekXXfD0oz6lR8zfj4MBpCNV42xZZM_U1_bWEyQoKeNjcOy8STkOpBtokfmYCybX0LZDLfJJVde-0m8-KPRi4Hs3h8bu5hlF_1iUkJtAiv-cZBHC0W6kIAHH5YbyNNC6UbP4amTdkuzKL53O1vc9Q_uPoRQoCmHdhRWuoY0v64oSchiTLj1plpMDY94s2tO_xVd9XcwgrCKPIbn3SKe1_kxKq9USldtTk7Tc0n4oN2DP57Qu92_X77oDBs2EyJn7ht2QKrbXYReepjCHjmxw37TFf5sGcf3UNWc5CVv5XqWW_DKDQCECxjXPj5JGTieGde4ailxKekfi2QQuKCh5tIhPmqnCjpntWhaHA2ozAdyRr15ukP4AQ1D0pKdg4er7wfbXsNM_JdIX_eRDLfhmBa0rtJ6cSyuCLtiLFQcW" nonce="3bc0c049be4af527160fd379cb94817b" charset="UTF-8"></script><style>
+        body {
+            background: url("{{ url_for('static', filename='assets/grandma.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .otp-container {
+            background-color: white;
+            padding: 70px;
+            border-radius: 10px;
+            box-shadow: 32px 0px 4px 12px rgba(163, 93, 141, 0.2);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="otp-container">
+        <h2>Admin Verification</h2>
+
+        <!-- Step 1: Request OTP -->
+        <div id="otp-request-form">
+            <label for="phone" class="my-3">Enter Mobile Number:</label>
+            <input type="text" id="phone" class="form-control my-3" placeholder="Enter your mobile number" required>
+            <button id="send-otp" class="btn btn-primary mt-3">Send OTP</button>
+        </div>
+
+        <!-- Step 2: Enter OTP -->
+        <div id="otp-verify-form" class="hidden">
+            <label for="otp">Enter OTP:</label>
+            <input type="text" id="otp" class="form-control" placeholder="Enter the OTP sent to your phone" required>
+            <button id="verify-otp" class="btn btn-success mt-3">Verify OTP</button>
+        </div>
+
+        <!-- Step 3: Success Message -->
+        <div id="otp-success" class="hidden">
+            <h4 class="text-success">OTP Verified Successfully!</h4>
+        </div>
+
+        <!-- Step 4: Error Message -->
+        <div id="otp-error" class="hidden">
+            <h4 class="text-danger">Invalid OTP, please try again.</h4>
+        </div>
+    </div>
+
+    <script>
+        // Simulate sending OTP
+        document.getElementById('send-otp').addEventListener('click', function() {
+        const phone = document.getElementById('phone').value;
+
+        // Check if the mobile number is not empty
+        if (phone.trim() === '') {
+             alert('Please enter your mobile number.');
+         } else {
+              // Generate a 6-digit OTP
+                generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+
+            // Show OTP input form after OTP is sent
+            document.getElementById('otp-request-form').classList.add('hidden');
+            document.getElementById('otp-verify-form').classList.remove('hidden');
+
+            // Alert the user with the generated OTP
+            alert(`Your OTP is: ${generatedOtp}`);
+    }
+});
+
+
+        document.getElementById('verify-otp').addEventListener('click', function() {
+            const otp = document.getElementById('otp').value;
+
+            // Verify the OTP
+            if (otp === generatedOtp) {
+                document.getElementById('otp-verify-form').classList.add('hidden');
+                document.getElementById('otp-success').classList.remove('hidden');
+            } else {
+                document.getElementById('otp-error').classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

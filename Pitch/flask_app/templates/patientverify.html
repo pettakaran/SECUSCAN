@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url("{{ url_for('static', filename='assets/grandma.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .otp-container {
+            background-color: white;
+            padding: 70px;
+            border-radius: 10px;
+            box-shadow: 32px 0px 4px 12px rgba(163, 93, 141, 0.2);
+        }
+        .hidden {
+            display: none;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="otp-container">
+        <h2>Patient Verification</h2>
+
+        <!-- Step 1: Request OTP -->
+        <div id="otp-request-form">
+            <label for="phone" class="my-3">Enter Mobile Number:</label>
+            <input type="text" id="phone" class="form-control my-3" placeholder="Enter your mobile number" required>
+            <button id="send-otp" class="btn btn-primary mt-3">Send OTP</button>
+        </div>
+
+        <!-- Step 2: Enter OTP -->
+        <div id="otp-verify-form" class="hidden">
+            <label for="otp">Enter OTP:</label>
+            <input type="text" id="otp" class="form-control" placeholder="Enter the OTP sent to your phone" required>
+            <button id="verify-otp" class="btn btn-success mt-3">Verify OTP</button>
+        </div>
+
+        <!-- Step 3: Success Message -->
+        <div id="otp-success" class="hidden">
+            <h4 class="text-success">OTP Verified Successfully!</h4>
+        </div>
+
+        <!-- Step 4: Error Message -->
+        <div id="otp-error" class="hidden">
+            <h4 class="text-danger">Invalid OTP, please try again.</h4>
+        </div>
+
+        <!-- Flash Messages for Invalid Credentials -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        let generatedOtp = ''; // Declare generatedOtp in the outer scope
+
+        // Simulate sending OTP
+        document.getElementById('send-otp').addEventListener('click', function() {
+            const phone = document.getElementById('phone').value;
+
+            // Check if the mobile number is not empty
+            if (phone.trim() === '') {
+                alert('Please enter your mobile number.');
+            } else {
+                // Here you would typically send the phone number to your backend to generate and send the OTP
+                // For now, we'll simulate OTP generation
+                generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+
+                // Show OTP input form after OTP is sent
+                document.getElementById('otp-request-form').classList.add('hidden');
+                document.getElementById('otp-verify-form').classList.remove('hidden');
+
+                // Alert the user with the generated OTP (for simulation)
+                alert(`Your OTP is: ${generatedOtp}`);
+            }
+        });
+
+        document.getElementById('verify-otp').addEventListener('click', function() {
+            const otp = document.getElementById('otp').value;
+
+            // Verify the OTP
+            if (otp === generatedOtp) {
+                document.getElementById('otp-verify-form').classList.add('hidden');
+                document.getElementById('otp-success').classList.remove('hidden');
+            } else {
+                document.getElementById('otp-error').classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
